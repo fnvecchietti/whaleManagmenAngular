@@ -1,0 +1,30 @@
+.line{
+    height: 10px;
+}
+.line.yellow{
+    background-color: #FFDC99;
+}
+.line.rose{
+    background-color: #FAA9A3
+}
+.line.blue{
+    background-color: #9DC2FF
+}
+.line.green{
+    background-color: #A9D3AB
+}
+.line.indigo{
+    background-color: #B4BBE2
+}
+
+mat-card{
+    height: auto;
+}
+
+.percent{
+    font-size: 69%;
+    color: red;
+}
+.percent.green{
+    color: #37833B;
+}

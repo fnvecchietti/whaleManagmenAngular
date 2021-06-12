@@ -1,0 +1,9 @@
+<mat-card>
+    <mat-card-title class="line indigo"></mat-card-title>
+    <mat-card-content>
+        <h1 *ngIf="percent || amount">{{ amount }}
+            <span *ngIf="percent" class="percent" [class.green]="percent > 0">{{percent + '%'}}</span>
+        </h1>
+        <h2>{{ name }}</h2>
+    </mat-card-content>
+</mat-card>

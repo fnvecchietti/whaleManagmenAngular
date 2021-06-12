@@ -1,0 +1,23 @@
+<form [formGroup]="form" (submit)="onSubmit(form)" class="form">
+    <ng-container *ngFor="let form of formStructure">
+        <ng-container *ngIf="form.type == 'input'">
+            <mat-form-field class="example-full-width">
+                <mat-label>{{ form.label }}</mat-label>
+                <input matInput [formControlName]="form.formControlName">
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="form.type == 'select'">
+            <mat-form-field>
+                <mat-label>{{ form.label }}</mat-label>
+                <mat-select [formControlName]="form.formControlName">
+                    <mat-option *ngFor="let option of form.options" [value]="option.value">{{ option.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </ng-container>
+    <div>
+        <button mat-button type="submit">submit</button>
+    </div>
+</form>
+<div>testing</div>

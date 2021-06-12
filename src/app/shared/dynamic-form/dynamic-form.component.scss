@@ -1,0 +1,11 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+    height: 100vh;
+    mat-form-field{
+        width: 50%;
+        margin: 10px;
+    }
+}

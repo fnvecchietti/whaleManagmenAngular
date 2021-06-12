@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    .table-container{
+        min-width: 600px;
+        width: 100%;
+    }
+    mat-form-field{
+        margin-top: 1%;
+        width: 50%;
+    }
+}

@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="chart-container">
+        <div class="charts">
+            <app-default-chart *ngFor="let chart of charts" [chartOption]="chart"></app-default-chart>
+        </div>
+    </div>
+    <div class="stat-cards">
+        <app-stat-card *ngFor="let account of userAccount" [name]="account.name" [amount]="account.total">
+        </app-stat-card>
+    </div>
+</div>
