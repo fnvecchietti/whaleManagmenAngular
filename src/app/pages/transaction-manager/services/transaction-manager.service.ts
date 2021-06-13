@@ -25,7 +25,7 @@ export class TransactionManagerService {
     return this.http.get<Array<Currency>>(`${environment.apiUrl}/currencies/all`)
   }
 
-  add(transaction: Transaction) {
+  createTransaction(transaction: Transaction) {
     if (transaction.type === 'credit') {
       return this.http.post(`${environment.apiUrl}/transaction/credit`, transaction)
     } else if (transaction.type === 'debit') {

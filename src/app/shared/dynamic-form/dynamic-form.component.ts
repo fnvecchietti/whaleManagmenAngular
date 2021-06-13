@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormStructure } from 'src/app/models/dynamic-form';
 
@@ -7,22 +7,25 @@ import { FormStructure } from 'src/app/models/dynamic-form';
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnChanges {
   @Input('data') formStructure!: Array<FormStructure>
-  @Output() submit = new EventEmitter<FormGroup>();
+  @Output() dynamicSubmit = new EventEmitter();
   form!: FormGroup
+  builded = false
   constructor(private fb: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.buildForm()
+    this.buildForm();
   }
+
   ngOnInit(): void {
 
   }
 
-  onSubmit(form: FormGroup) {
+  submitForm(form: FormGroup) {
     if (!form.valid) return
-    this.submit.emit(form)
+    const data = form.getRawValue()
+    this.dynamicSubmit.emit(data)
   }
 
   buildForm() {

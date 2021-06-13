@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { combineLatest, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { Account } from 'src/app/models/accounts';
 import { Currency } from 'src/app/models/currencies';
 import { FormStructure } from 'src/app/models/dynamic-form';
@@ -19,17 +18,15 @@ export class AddComponent implements OnInit {
   currencies!: Array<Currency>
   formData: Array<FormStructure> = []
 
-  constructor(private loadingService: LoadingService, private tManagerService: TransactionManagerService) { }
+  constructor(private loadingService: LoadingService, private transactionManagerService: TransactionManagerService) { }
 
   ngOnInit(): void {
-
     forkJoin({
-      transsactionType: this.tManagerService.getTypesOfAsset(),
-      userAccounts: this.tManagerService.getUserAccounts(),
-      currencies: this.tManagerService.getCurrencies()
+      transsactionType: this.transactionManagerService.getTypesOfAsset(),
+      userAccounts: this.transactionManagerService.getUserAccounts(),
+      currencies: this.transactionManagerService.getCurrencies()
     }).subscribe(({ transsactionType, userAccounts, currencies }) => {
       this.createFormDataStructure(transsactionType, userAccounts, currencies)
-
     })
   }
 
@@ -82,8 +79,25 @@ export class AddComponent implements OnInit {
     this.formData = fields as Array<FormStructure>
   }
 
-  onSubmit(value: FormGroup) {
-    console.log(value.getRawValue());
+  onSubmit(data: any) {
+    this.loadingService.on()
+    const transaction: Transaction = {
+      type: data.transsactionType,
+      amount: data.amount,
+      account_ref: data.accounts,
+      currency_ref: data.currency,
+      description: data.description
+    }
+    this.transactionManagerService.createTransaction(transaction).subscribe(res => {
+
+      this.loadingService.off()
+    },
+      err => {
+
+        this.loadingService.off()
+      })
+
+
   }
 
 }
