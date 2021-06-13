@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { Account } from 'src/app/models/accounts';
 import { Currency } from 'src/app/models/currencies';
@@ -31,11 +32,12 @@ export class AddComponent implements OnInit {
   }
 
   createFormDataStructure(transsactionType: Array<string>, userAccounts: Array<Account>, currencies: Array<Currency>) {
-    const fields = [
+    const fields: Array<FormStructure> = [
       {
         type: 'select',
         label: 'Transaction type',
         formControlName: 'transsactionType',
+        validations: ["", Validators.required],
         options: transsactionType.map(t => {
           return {
             name: t,
@@ -47,6 +49,7 @@ export class AddComponent implements OnInit {
         type: 'select',
         label: 'Accounts',
         formControlName: 'accounts',
+        validations: ["", Validators.required],
         options: userAccounts.map(a => {
           return {
             name: a.name,
@@ -57,6 +60,7 @@ export class AddComponent implements OnInit {
       {
         type: 'select',
         label: 'Currency',
+        validations: ["", Validators.required],
         formControlName: 'currency',
         options: currencies.map(c => {
           return {
@@ -68,15 +72,17 @@ export class AddComponent implements OnInit {
       {
         type: 'input',
         label: 'Amount',
+        validations: ["", Validators.required],
         formControlName: 'amount',
       }, {
         type: 'input',
         label: 'Description',
+        validations: ["", Validators.required],
         formControlName: 'description'
 
       }
     ]
-    this.formData = fields as Array<FormStructure>
+    this.formData = fields
   }
 
   onSubmit(data: any) {
@@ -89,15 +95,12 @@ export class AddComponent implements OnInit {
       description: data.description
     }
     this.transactionManagerService.createTransaction(transaction).subscribe(res => {
-
       this.loadingService.off()
     },
       err => {
-
         this.loadingService.off()
       })
 
 
   }
-
 }

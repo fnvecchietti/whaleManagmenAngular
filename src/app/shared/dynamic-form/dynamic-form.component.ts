@@ -31,7 +31,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   buildForm() {
     const formStructureBuild: any = {}
     this.formStructure.forEach((field: FormStructure) => {
-      formStructureBuild[field.formControlName] = []
+      formStructureBuild[field.formControlName] = field.validations ? field.validations : [""]
     })
     this.form = this.fb.group(formStructureBuild)
   }
